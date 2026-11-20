@@ -1,0 +1,15 @@
+name: Build Sakina
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile
+        shell: cmd
+        run: |
+          "%WINDIR%\Microsoft.NET\Framework64\v4.0.30319\csc.exe" /nologo /target:winexe /optimize+ /out:Sakina.exe /win32icon:Sakina.ico /win32manifest:Sakina.manifest /r:System.Windows.Forms.dll /r:System.Drawing.dll Sakina.cs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Sakina
+          path: Sakina.exe
